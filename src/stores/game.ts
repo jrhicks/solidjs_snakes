@@ -46,7 +46,7 @@ export const newGame = (width: number, height: number): Game => {
     const playing = false;
     const commands = []
     const direction = "right";
-    const gameStatus = "won_level"
+    const gameStatus = "dead"
     return { 
         gameStatus, commands, direction, lives, level, subLevel,
         width, height, grid, obsticles, goals, clock
@@ -180,7 +180,6 @@ export const advanceSnake = (game: Game, setGame) => {
 }
 
 export const resetLevel = (game: Game, setGame) => {
-    setGame('playing', true)
     clearBoard(game, setGame)
     setGame('subLevel', 0)
     setGame('commands', [])
