@@ -1,3 +1,5 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/1e2dfde7-dfd6-4661-bd01-799946d72df2/deploy-status)](https://app.netlify.com/sites/solidsnakes/deploys)
+
 # SolidStart
 
 Everything you need to build a Solid project, powered by [`solid-start`](https://start.solidjs.com);
