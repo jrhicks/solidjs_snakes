@@ -1,6 +1,6 @@
 import { Index, Show } from 'solid-js'
 import { type Game } from '../stores/game';
-import { createTween } from '../primitives/createTween'
+import { createTween } from '@solid-primitives/tween'
 
 
 const GameView = (props: {game: Game}) => {
@@ -23,7 +23,7 @@ const GameView = (props: {game: Game}) => {
     </>)
 }
 
-const WonLevelView = (props: {game: Game, getSpin: number }) => {
+const WonLevelView = (props: {game: Game, getSpin: number | void}) => {
 
     return (
         <div class="flex justify-center mt-20">
