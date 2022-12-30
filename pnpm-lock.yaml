@@ -9,10 +9,12 @@ specifiers:
   '@types/node': ^18.11.17
   autoprefixer: ^10.4.12
   postcss: ^8.4.18
+  solid-confetti-explosion: ^1.0.3
   solid-js: ^1.6.2
   solid-start: ^0.2.0
   solid-start-netlify: ^0.2.9
   solid-start-node: ^0.2.0
+  solid-styled-components: ^0.28.5
   solid-transition-group: ^0.0.12
   tailwindcss: ^3.2.0
   typescript: ^4.8.4
@@ -25,8 +27,10 @@ dependencies:
   '@solid-primitives/tween': 1.2.2_solid-js@1.6.6
   '@solidjs/meta': 0.28.2_solid-js@1.6.6
   '@solidjs/router': 0.6.0_solid-js@1.6.6
+  solid-confetti-explosion: 1.0.3_6bk5jn5bnzfibqyipuayqhs2vy
   solid-js: 1.6.6
   solid-start: 0.2.8_7g4juq64zsg2futgalxovnqs54
+  solid-styled-components: 0.28.5_solid-js@1.6.6
   solid-transition-group: 0.0.12_solid-js@1.6.6
   undici: 5.14.0
 
@@ -2325,6 +2329,14 @@ packages:
     resolution: {integrity: sha512-WOBp/EEGUiIsJSp7wcv/y6MO+lV9UoncWqxuFfm8eBwzWNgyfBd6Gz+IeKQ9jCmyhoH99g15M3T+QaVHFjizVA==}
     engines: {node: '>=4'}
 
+  /goober/2.1.11_csstype@3.1.1:
+    resolution: {integrity: sha512-5SS2lmxbhqH0u9ABEWq7WPU69a4i2pYcHeCxqaNq6Cw3mnrF0ghWNM4tEGid4dKy8XNIAUbuThuozDHHKJVh3A==}
+    peerDependencies:
+      csstype: ^3.0.10
+    dependencies:
+      csstype: 3.1.1
+    dev: false
+
   /has-flag/3.0.0:
     resolution: {integrity: sha512-sKJf1+ceQBr4SMkvQnBDNDtf4TXpVhVGateu0t918bl30FnbE2m4vNLX+VWe/dpjlb+HugGYzW7uQXH98HPEYw==}
     engines: {node: '>=4'}
@@ -2824,6 +2836,16 @@ packages:
       mrmime: 1.0.1
       totalist: 3.0.0
 
+  /solid-confetti-explosion/1.0.3_6bk5jn5bnzfibqyipuayqhs2vy:
+    resolution: {integrity: sha512-rAxyxcyhkb7ZCO9fU6YAbH65YH/4+4sCAyaGasd4WzX7XZEpV4bO+VYGYNDV78e/RDwB/8b+PWH25fqwI/igHw==}
+    peerDependencies:
+      solid-js: ^1.4.5
+      solid-styled-components: ^0.28.4
+    dependencies:
+      solid-js: 1.6.6
+      solid-styled-components: 0.28.5_solid-js@1.6.6
+    dev: false
+
   /solid-js/1.6.6:
     resolution: {integrity: sha512-5x33mEbPI8QLuywvFjQP4krjWDr8xiYFgZx9KCBH7b0ZzypQCHaUubob7bK6i+1u6nhaAqhWtvXS587Kb8DShA==}
     dependencies:
@@ -2926,6 +2948,16 @@ packages:
       wait-on: 6.0.1_debug@4.3.4
     transitivePeerDependencies:
       - supports-color
+
+  /solid-styled-components/0.28.5_solid-js@1.6.6:
+    resolution: {integrity: sha512-vwTcdp76wZNnESIzB6rRZ3U55NgcSAQXCiiRIiEFhxTFqT0bEh/warNT1qaRZu4OkAzrBkViOngF35ktI8sc4A==}
+    peerDependencies:
+      solid-js: ^1.4.4
+    dependencies:
+      csstype: 3.1.1
+      goober: 2.1.11_csstype@3.1.1
+      solid-js: 1.6.6
+    dev: false
 
   /solid-transition-group/0.0.12_solid-js@1.6.6:
     resolution: {integrity: sha512-Eu4MfNZSSxM67C+4EXaoDiWr4BFbDLg3j30JQJgQEIH9UDOfgNPfZlsFDhT/PxwJqhe6sn85W+dbmYJzBmjpAA==}

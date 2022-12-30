@@ -1,6 +1,6 @@
 import { A } from "solid-start";
 import { createStore } from "solid-js/store";
-import { createSignal, createEffect } from "solid-js";
+import { Show, createSignal, createEffect } from "solid-js";
 import { newGame, runGameLoop, ArrowKey }  from "../stores/game";
 import { useKeyDownList } from "@solid-primitives/keyboard";
 
@@ -27,6 +27,9 @@ export default function Home() {
       if(['ARROWUP', 'ARROWDOWN', 'ARROWLEFT', 'ARROWRIGHT'].includes(k.toString())) {
         setRestrictedKeys([...restrictedKeys(), k.toString()])
         setGame('commands', (v)=>[...v, k.toString() as ArrowKey])
+        if(k.toString() == 'ARROWUP') {
+          setGame('gameStatus', 'won_level')
+        }
       }
     }
   })
@@ -34,7 +37,7 @@ export default function Home() {
 
   return (
     <main class="text-green-500 font-mono flex flex-col h-full">
-      
+
       <div class="h-10" />
       
       <div class="px-6">

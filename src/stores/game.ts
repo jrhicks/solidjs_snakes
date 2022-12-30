@@ -46,7 +46,7 @@ export const newGame = (width: number, height: number): Game => {
     const playing = false;
     const commands = []
     const direction = "right";
-    const gameStatus = "dead"
+    const gameStatus = "won_level"
     return { 
         gameStatus, commands, direction, lives, level, subLevel,
         width, height, grid, obsticles, goals, clock

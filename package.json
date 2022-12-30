@@ -22,8 +22,10 @@
     "@solid-primitives/tween": "^1.2.2",
     "@solidjs/meta": "^0.28.0",
     "@solidjs/router": "^0.6.0",
+    "solid-confetti-explosion": "^1.0.3",
     "solid-js": "^1.6.2",
     "solid-start": "^0.2.0",
+    "solid-styled-components": "^0.28.5",
     "solid-transition-group": "^0.0.12",
     "undici": "^5.11.0"
   },
