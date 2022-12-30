@@ -27,9 +27,6 @@ export default function Home() {
       if(['ARROWUP', 'ARROWDOWN', 'ARROWLEFT', 'ARROWRIGHT'].includes(k.toString())) {
         setRestrictedKeys([...restrictedKeys(), k.toString()])
         setGame('commands', (v)=>[...v, k.toString() as ArrowKey])
-        if(k.toString() == 'ARROWUP') {
-          setGame('gameStatus', 'won_level')
-        }
       }
     }
   })
