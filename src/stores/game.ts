@@ -25,7 +25,6 @@ export type Game = {
     snake?: Snake;
     obsticles: { x: number, y: number }[];
     goals: { x: number, y: number }[];
-    clock: number;
 }
 
 export const newGame = (width: number, height: number): Game => {
@@ -37,19 +36,19 @@ export const newGame = (width: number, height: number): Game => {
             grid[y].push(' ');
         }
     }
-    const transition = 0
-    const level = 1;
-    const subLevel = 1;
-    const lives = 100;
-    const goals = [];
-    const clock = 0;
-    const playing = false;
-    const commands = []
-    const direction = "right";
-    const gameStatus = "dead"
+
     return { 
-        gameStatus, commands, direction, lives, level, subLevel,
-        width, height, grid, obsticles, goals, clock
+        width: width,
+        height: height,
+        grid: grid,
+        gameStatus: "dead",
+        direction: "right",
+        lives: 100,
+        level: 1,
+        subLevel: 1,
+        commands: [],
+        obsticles: [],
+        goals: []
     };
 }
 
