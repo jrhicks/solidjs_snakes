@@ -38,7 +38,7 @@ export default function Home() {
       <div class="h-10" />
       
       <div class="px-6">
-        <div class="max-w-3xl mx-auto flex flex-row">
+        <div class="max-w-xl mx-auto flex flex-row">
           <div class="flex-grow">
             <h1 class="">SolidSnakes</h1>
             <p class="">A snake game written in SolidJS</p>
@@ -54,7 +54,7 @@ export default function Home() {
       <div class="h-10" />
 
       <div class="px-6 flex-grow">
-        <div class="max-w-3xl mx-auto h-full">
+        <div class="max-w-xl mx-auto h-full">
           <GameView game={game} />
         </div>
       </div>
