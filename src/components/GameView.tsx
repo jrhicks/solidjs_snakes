@@ -72,10 +72,10 @@ const BoardView = (props: { game: Game }) => {
                   classList={{
                     "aspect-square": true,
                     "p-0 m-0 overflow-hidden": true,
-                    "bg-green-400": cell() == "S",
+                    "bg-cyan-400": cell() == "S",
                     "bg-green-500": cell() == "W",
                     "bg-green-300": cell() == "O",
-                    "bg-cyan-600 rounded-full": cell() == "G",
+                    "outline outline-cyan-100 bg-cyan-400 rounded-full": cell() == "G",
                   }}
                 ></div>
               )}
