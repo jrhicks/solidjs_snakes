@@ -27,6 +27,7 @@ export type Game = {
     goals: { x: number, y: number }[];
     clock: number;
     restrictedKeys: ArrowKey[];
+    help: number;
 }
 
 export const newGame = (width: number, height: number): Game => {
@@ -49,9 +50,11 @@ export const newGame = (width: number, height: number): Game => {
     const direction = "right";
     const gameStatus = "dead"
     const restrictedKeys = [];
+    const help=0;
     return { 
         gameStatus, commands, direction, lives, level, subLevel,
-        width, height, grid, obsticles, goals, clock, restrictedKeys
+        width, height, grid, obsticles, goals, clock, restrictedKeys,
+        help
     };
 }
 
@@ -117,30 +120,96 @@ export const setDirection = (game: Game, setGame) => {
     if(game.commands.length > 0) {
         const command = game.commands[0];
         if(command == "ARROWUP" && game.direction != "down") {
+            // If not already helping, check if there is a wall above
+            // And Delay the next command
+            if(game.help == 0 ) {
+                let space = game.grid[game.snake.head.y-1][game.snake.head.x];
+                if(space == "W" || space == "O" || space == "S") {
+                    setGame('help', (v) => v+1)
+                    return
+                }    
+            }
+            setGame('help', 0)
             setGame('direction', "up");
+            setGame('commands', game.commands.slice(1))
+            return
         } else if(command == "ARROWDOWN" && game.direction != "up") {
+            if(game.help == 0) {
+                let space = game.grid[game.snake.head.y+1][game.snake.head.x];
+                if(space == "W" || space == "O" || space == "S") {
+                    setGame('help', (v) => v+1)
+                    return
+                }    
+            }
+            setGame('help', 0)
             setGame('direction', "down");
+            setGame('commands', game.commands.slice(1))
+            return
         } else if(command == "ARROWLEFT" && game.direction != "right") {
+            if(game.help == 0) {
+                let space = game.grid[game.snake.head.y][game.snake.head.x-1];
+                if(space == "W" || space == "O" || space == "S") {
+                    setGame('help', (v) => v+1)
+                    return
+                }    
+            }
+            setGame('help', 0)
             setGame('direction', "left");
+            setGame('commands', game.commands.slice(1))
+            return
         } else if(command == "ARROWRIGHT" && game.direction != "left") {
+            if(game.help == 0) {
+                let space = game.grid[game.snake.head.y][game.snake.head.x+1];
+                if(space == "W" || space == "O" || space == "S") {
+                    setGame('help', (v) => v+1)
+                    return
+                }    
+            }
+            setGame('help', 0)
             setGame('direction', "right");
+            setGame('commands', game.commands.slice(1))
+            return
         }
-        setGame('commands', game.commands.slice(1))
+        
+    }
+}
+
+export const nextHead = (head, direction) => {
+    if(direction == "right") {
+        return {x: head.x+1, y: head.y}
+    }
+    if(direction == "left") {
+        return {x: head.x-1, y: head.y}
+    }
+    if(direction == "up") {
+        return {x: head.x, y: head.y-1}
+    }
+    if(direction == "down") {
+        return {x: head.x, y: head.y+1}
     }
 }
 
 export const advanceSnake = (game: Game, setGame) => {    
+    if(game.help <= 1) {
+        let h = nextHead(game.snake.head, game.direction);
+        let s = game.grid[h.y][h.x];
+        if(s == "W" || s == "O" || s == "S") {
+            setGame('help', (v) => v+1)
+            return
+        }
+    }
+
     if(game.direction == "right") {
-        setGame('snake', 'head', 'x', game.snake.head.x+1);
+        setGame('snake', 'head', 'x', (v) => v+1);
     }
     if(game.direction == "left") {
-        setGame('snake', 'head', 'x', game.snake.head.x-1);
+        setGame('snake', 'head', 'x', (v) => v-1);
     }
     if(game.direction == "up") {
-        setGame('snake', 'head', 'y', game.snake.head.y-1);
+        setGame('snake', 'head', 'y', (v) => v-1);
     }
     if(game.direction == "down") {
-        setGame('snake', 'head', 'y', game.snake.head.y+1);
+        setGame('snake', 'head', 'y', (v) => v+1);
     }
 
     // Handle Intersecting a Snake
@@ -168,7 +237,6 @@ export const advanceSnake = (game: Game, setGame) => {
         }
     }
 
-
     // Remove Last Body Part Depending On Current and Assigned Length
     setGame('snake', 'body', (v:{x:number, y:number}[])=>[{x: game.snake.head.x, y: game.snake.head.y}, ...v])
     if(game.snake.body.length >= game.snake.length) {
@@ -176,9 +244,7 @@ export const advanceSnake = (game: Game, setGame) => {
         setGame('snake', 'body', game.snake.body.slice(0, game.snake.body.length-1))
         setGame('grid', last.y, last.x, " ");
     }
-
     setGame('grid', game.snake.head.y, game.snake.head.x, "S");
-
 }
 
 export const resetLevel = (game: Game, setGame) => {
@@ -186,6 +252,7 @@ export const resetLevel = (game: Game, setGame) => {
     setGame('subLevel', 0)
     setGame('commands', [])
     setGame('direction', "right")
+    setGame('help', 0)
     setGoals(game, setGame)
     setWalls(game, setGame)
     setObsticles(game, setGame)
