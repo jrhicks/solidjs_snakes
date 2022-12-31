@@ -26,6 +26,7 @@ export type Game = {
     obsticles: { x: number, y: number }[];
     goals: { x: number, y: number }[];
     clock: number;
+    restrictedKeys: ArrowKey[];
 }
 
 export const newGame = (width: number, height: number): Game => {
@@ -47,9 +48,10 @@ export const newGame = (width: number, height: number): Game => {
     const commands = []
     const direction = "right";
     const gameStatus = "dead"
+    const restrictedKeys = [];
     return { 
         gameStatus, commands, direction, lives, level, subLevel,
-        width, height, grid, obsticles, goals, clock
+        width, height, grid, obsticles, goals, clock, restrictedKeys
     };
 }
 
@@ -189,6 +191,31 @@ export const resetLevel = (game: Game, setGame) => {
     setObsticles(game, setGame)
     setSnake(game, setGame)   
 }
+
+
+// Monitor Keys and add them to the Snake Commands Queue
+// Disallow Multiple Commands in the Same Direction
+// Reset once all keys are released
+
+export const handleKeys = (keys, game: Game, setGame) => {
+    if(keys().length==0) {
+        setGame('restrictedKeys', [])
+        return
+    } 
+
+    for(let k of keys()) {
+        if(game.restrictedKeys.includes(k.toString())) {
+            continue
+        }
+        
+        if(['ARROWUP', 'ARROWDOWN', 'ARROWLEFT', 'ARROWRIGHT'].includes(k.toString())) {
+            setGame('restrictedKeys', [...game.restrictedKeys, k.toString()])
+            setGame('commands', (v)=>[...v, k.toString() as ArrowKey])
+        }
+    }
+}
+
+
 
 export const runGameLoop = (game: Game, setGame) => {
     let clockSpeed;

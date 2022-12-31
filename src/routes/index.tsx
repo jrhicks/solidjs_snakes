@@ -1,40 +1,23 @@
 import { A } from "solid-start";
 import { createStore } from "solid-js/store";
-import { Show, createSignal, createEffect } from "solid-js";
-import { newGame, runGameLoop, ArrowKey }  from "../stores/game";
+import { createSignal, createEffect } from "solid-js";
+import { newGame, runGameLoop, handleKeys }  from "../stores/game";
 import { useKeyDownList } from "@solid-primitives/keyboard";
 
 import GameView from "../components/GameView";
 
 export default function Home() {
   const [game, setGame] = createStore(newGame(35, 35))
-  runGameLoop(game, setGame)
-  const [restrictedKeys, setRestrictedKeys] = createSignal([])
   const [keys] = useKeyDownList();
 
-
+  runGameLoop(game, setGame)
   createEffect(() => {
-    if(keys().length==0) {
-      setRestrictedKeys([])
-      return
-    } 
-
-    for(let k of keys()) {
-      if(restrictedKeys().includes(k.toString())) {
-        continue
-      }
-      
-      if(['ARROWUP', 'ARROWDOWN', 'ARROWLEFT', 'ARROWRIGHT'].includes(k.toString())) {
-        setRestrictedKeys([...restrictedKeys(), k.toString()])
-        setGame('commands', (v)=>[...v, k.toString() as ArrowKey])
-      }
-    }
+    handleKeys(keys, game, setGame)
   })
-
 
   return (
     <main class="text-green-500 font-mono flex flex-col h-full">
-
+      
       <div class="h-10" />
       
       <div class="px-6">
