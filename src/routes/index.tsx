@@ -23,7 +23,7 @@ export default function Home() {
       <div class="px-6">
         <div class="max-w-xl mx-auto flex flex-row">
           <div class="flex-grow">
-            <h1 class="">SolidSnakes</h1>
+            <h1 class="font-bold">SolidSnakes</h1>
             <p class="">A snake game written in SolidJS</p>
           </div>
           <div>
@@ -43,6 +43,17 @@ export default function Home() {
       </div>
       
       <div class="h-10" />
+
+      <div class="px-6">
+        <div class="max-w-xl mx-auto flex">
+          <p class="flex-grow">Github: <a class="underline" href="https://github.com/jrhicks/solidjs_snakes">jrhicks/solidjs_snakes</a></p>
+          <p class="">Follow: <a class="underline" href="https://twitter.com/jrhicks">@jrhicks</a></p>
+        </div>
+      </div>
+      
+      
+      <div class="h-5" />
+
     </main>
   );
 }
