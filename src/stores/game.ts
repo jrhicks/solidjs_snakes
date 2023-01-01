@@ -77,42 +77,71 @@ export const setWalls = (game: Game, setGame) => {
 }
 
 export const setSnake = (game: Game, setGame) => {
+    const x = 2
+    const y = Math.floor(game.height/2);
+    setGame('direction', 'right')
+    setGame('grid', y, x, "S");
+    setGame('snake', {
+        head: { x, y },
+        body: [{x, y}],
+        length: 1
+    });
+}    
+
+export const canObsticleOccupy = (game: Game, x: number, y: number) => {
+    // Keep obsticles off center
+    if (y == Math.floor(game.height / 2)) {
+        return false;
+    }
+    // Permit obsticles to be placed on empty space
+    if (game.grid[y][x] === " ") {
+        return true;
+    }
+
+    return false;
+}
+
+export const randomObsticlePoint = (game: Game) => {
     while (true) {
         const x = Math.floor(Math.random() * (game.width-2))+1;
         const y = Math.floor(Math.random() * (game.height-2))+1;
-        
-        // Probably shouldn't use the grid for game logic
-        if (game.grid[y][x] === " ") {
-            setGame('grid', y, x, "S");
-            setGame('snake', {
-                head: { x, y },
-                body: [{x, y}],
-                length: 1
-            });
-            return;
-        }
-    }
-}    
-
-export const setObsticles = (game: Game, setGame ) => {
-    for(let i=0; i<game.level*3; i++) {
-        const x = Math.floor(Math.random() * (game.width-2))+1;
-        const y = Math.floor(Math.random() * (game.height-2))+1;
-        if (game.grid[y][x] == " ") {
-                setGame('grid', y, x, "W");
+        if (canObsticleOccupy(game, x, y)) {
+            return { x, y };
         }
     }
 }
 
+export const setObsticles = (game: Game, setGame ) => {
+    for(let i=0; i<game.level*3; i++) {
+        const {x, y} = randomObsticlePoint(game);
+        setGame('grid', y, x, "O");
+    }
+}
+
+export const canGoalOccupy = (game: Game, x: number, y: number) => {
+    // Permit goal to be placed on empty space
+    if (game.grid[y][x] === " ") {
+        return true;
+    }
+
+    return false;
+}
+
+export const randomGoalPoint = (game: Game) => {
+    while (true) {
+        const x = Math.floor(Math.random() * (game.width-2))+1;
+        const y = Math.floor(Math.random() * (game.height-2))+1;
+        if (canGoalOccupy(game, x, y)) {
+            return { x, y };
+        }
+    }
+}
 
 export const setGoals = (game: Game, setGame) => {
     for(let i=0; i<10; i++) {
-        const x = Math.floor(Math.random() * (game.width-2))+1;
-        const y = Math.floor(Math.random() * (game.height-2))+1;
-        if (game.grid[y][x] === " ") {
-                setGame('grid', y, x, "G");
-                setGame('goals', game.goals.concat({x, y}))
-        }
+        const {x, y} = randomGoalPoint(game);
+        setGame('grid', y, x, "G");
+        setGame('goals', game.goals.concat({x, y}))
     }
 }
 
@@ -252,7 +281,6 @@ export const resetLevel = (game: Game, setGame) => {
     clearBoard(game, setGame)
     setGame('subLevel', 0)
     setGame('commands', [])
-    setGame('direction', "right")
     setGame('strength', 1)
     setGoals(game, setGame)
     setWalls(game, setGame)
