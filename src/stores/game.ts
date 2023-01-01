@@ -192,6 +192,8 @@ export const setDirection = (game: Game, setGame) => {
             return
         }
         
+        // They must be trying to do a 180, so ignore the command
+        setGame('commands', game.commands.slice(1))
     }
 }
 
