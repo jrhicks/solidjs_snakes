@@ -1,5 +1,4 @@
-import { makeTimer } from '@solid-primitives/timer'
-import { Body } from 'solid-start';
+import { type SetStoreFunction } from 'solid-js/store';
 
 export type ArrowKey = "ARROWUP" | "ARROWDOWN" | "ARROWLEFT" | "ARROWRIGHT";
 
@@ -56,7 +55,7 @@ export const newGame = (width: number, height: number): Game => {
     }
 }
 
-export const clearBoard = (game: Game, setGame) => {
+export const clearBoard = (game: Game, setGame: SetStoreFunction<Game>) => {
     for (let y = 0; y < game.height; y++) {
         for (let x = 0; x < game.width; x++) {
             setGame('grid', y, x, " ");
@@ -64,7 +63,7 @@ export const clearBoard = (game: Game, setGame) => {
     }
 }
 
-export const setWalls = (game: Game, setGame) => {
+export const setWalls = (game: Game, setGame: SetStoreFunction<Game>) => {
     for (let y = 0; y < game.height; y++) {
         for (let x = 0; x < game.width; x++) {
             if(y==0 || y==game.height-1 || x==0 || x==game.width-1){
@@ -74,7 +73,7 @@ export const setWalls = (game: Game, setGame) => {
     }
 }
 
-export const setSnake = (game: Game, setGame) => {
+export const setSnake = (game: Game, setGame: SetStoreFunction<Game>) => {
     const x = 2
     const y = Math.floor(game.height/2);
     setGame('direction', 'right')
@@ -109,7 +108,7 @@ export const randomObsticlePoint = (game: Game) => {
     }
 }
 
-export const setObsticles = (game: Game, setGame ) => {
+export const setObsticles = (game: Game, setGame: SetStoreFunction<Game> ) => {
     for(let i=0; i<game.level*3; i++) {
         const {x, y} = randomObsticlePoint(game);
         setGame('grid', y, x, "O");
@@ -135,7 +134,7 @@ export const randomGoalPoint = (game: Game) => {
     }
 }
 
-export const setGoals = (game: Game, setGame) => {
+export const setGoals = (game: Game, setGame: SetStoreFunction<Game>) => {
     for(let i=0; i<10; i++) {
         const {x, y} = randomGoalPoint(game);
         setGame('grid', y, x, "G");
@@ -143,7 +142,7 @@ export const setGoals = (game: Game, setGame) => {
     }
 }
 
-export const setDirection = (game: Game, setGame) => {
+export const setDirection = (game: Game, setGame: SetStoreFunction<Game>) => {
     if(game.commands.length > 0) {
         const command = game.commands[0];
         if(command == "ARROWUP" && game.direction != "down") {
@@ -212,7 +211,7 @@ export const nextHead = (head, direction) => {
     }
 }
 
-export const advanceSnake = (game: Game, setGame) => {    
+export const advanceSnake = (game: Game, setGame: SetStoreFunction<Game>) => {    
     if(game.strength > 0) {
         let h = nextHead(game.snake.head, game.direction);
         let s = game.grid[h.y][h.x];
@@ -271,7 +270,7 @@ export const advanceSnake = (game: Game, setGame) => {
     setGame('grid', game.snake.head.y, game.snake.head.x, "S");
 }
 
-export const resetLevel = (game: Game, setGame) => {
+export const resetLevel = (game: Game, setGame: SetStoreFunction<Game>) => {
     clearBoard(game, setGame)
     setGame('subLevel', 0)
     setGame('commands', [])
@@ -287,7 +286,7 @@ export const resetLevel = (game: Game, setGame) => {
 // Disallow Multiple Commands in the Same Direction
 // Reset once all keys are released
 
-export const handleKeys = (keys, game: Game, setGame) => {
+export const handleKeys = (keys, game: Game, setGame: SetStoreFunction<Game>) => {
     
     // Remove restrictions any time a key is released
     for(let k of game.restrictedKeys) {
@@ -310,7 +309,7 @@ export const handleKeys = (keys, game: Game, setGame) => {
 
 
 
-export const runGameLoop = (game: Game, setGame) => {
+export const runGameLoop = (game: Game, setGame: SetStoreFunction<Game>) => {
     let clockSpeed;
     const loop = () => {
         clockSpeed = 50 + game.level
