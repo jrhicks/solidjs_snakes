@@ -27,6 +27,7 @@ export type Game = {
     goals: { x: number, y: number }[];
     restrictedKeys: ArrowKey[];
     help: number;
+    strength: number;
 }
 
 export const newGame = (width: number, height: number): Game => {
@@ -52,7 +53,8 @@ export const newGame = (width: number, height: number): Game => {
         obsticles: [],
         goals: [],
         restrictedKeys: [],
-        help: 0
+        help: 0,
+        strength: 1
     }
 }
 
@@ -120,10 +122,10 @@ export const setDirection = (game: Game, setGame) => {
         if(command == "ARROWUP" && game.direction != "down") {
             // If not already helping, check if there is a wall above
             // And Delay the next command
-            if(game.help == 0 ) {
+            if(game.strength > 0 ) {
                 let space = game.grid[game.snake.head.y-1][game.snake.head.x];
                 if(space == "W" || space == "O" || space == "S") {
-                    setGame('help', (v) => v+1)
+                    setGame('strength', (v) => v-1)
                     return
                 }    
             }
@@ -188,11 +190,11 @@ export const nextHead = (head, direction) => {
 }
 
 export const advanceSnake = (game: Game, setGame) => {    
-    if(game.help <= 1) {
+    if(game.strength > 0) {
         let h = nextHead(game.snake.head, game.direction);
         let s = game.grid[h.y][h.x];
         if(s == "W" || s == "O" || s == "S") {
-            setGame('help', (v) => v+1)
+            setGame('strength', (v) => v-1)
             return
         }
     }
@@ -228,7 +230,8 @@ export const advanceSnake = (game: Game, setGame) => {
     // Handle Intersecting a Goal
     if(game.grid[game.snake.head.y][game.snake.head.x] == "G") {
         setGame('goals', game.goals.filter(goal => goal.x != game.snake.head.x+1 && goal.y != game.snake.head.y))
-        setGame('subLevel', game.subLevel+1)
+        setGame('subLevel', (v)=>v+1)
+        setGame('strength', (v)=>v+1)
         setGame('snake', 'length', (game.subLevel * game.subLevel * 3))
         if(game.subLevel >= 10) {
             setGame('gameStatus', 'won_level')
@@ -250,7 +253,7 @@ export const resetLevel = (game: Game, setGame) => {
     setGame('subLevel', 0)
     setGame('commands', [])
     setGame('direction', "right")
-    setGame('help', 0)
+    setGame('strength', 1)
     setGoals(game, setGame)
     setWalls(game, setGame)
     setObsticles(game, setGame)
