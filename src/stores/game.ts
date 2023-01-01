@@ -286,10 +286,13 @@ export const resetLevel = (game: Game, setGame) => {
 // Reset once all keys are released
 
 export const handleKeys = (keys, game: Game, setGame) => {
-    if(keys().length==0) {
-        setGame('restrictedKeys', [])
-        return
-    } 
+    
+    // Remove restrictions any time a key is released
+    for(let k of game.restrictedKeys) {
+        if(!keys().includes(k)) {
+            setGame('restrictedKeys', game.restrictedKeys.filter(v=>v!=k))
+        }
+    }
 
     for(let k of keys()) {
         if(game.restrictedKeys.includes(k.toString())) {
