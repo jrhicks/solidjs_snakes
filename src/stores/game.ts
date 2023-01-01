@@ -147,8 +147,6 @@ export const setDirection = (game: Game, setGame) => {
     if(game.commands.length > 0) {
         const command = game.commands[0];
         if(command == "ARROWUP" && game.direction != "down") {
-            // If not already helping, check if there is a wall above
-            // And Delay the next command
             if(game.strength > 0 ) {
                 let space = game.grid[game.snake.head.y-1][game.snake.head.x];
                 if(space == "W" || space == "O" || space == "S") {
@@ -156,43 +154,39 @@ export const setDirection = (game: Game, setGame) => {
                     return
                 }    
             }
-            setGame('help', 0)
             setGame('direction', "up");
             setGame('commands', game.commands.slice(1))
             return
         } else if(command == "ARROWDOWN" && game.direction != "up") {
-            if(game.help == 0) {
+            if(game.strength > 0) {
                 let space = game.grid[game.snake.head.y+1][game.snake.head.x];
                 if(space == "W" || space == "O" || space == "S") {
-                    setGame('help', (v) => v+1)
+                    setGame('strength', (v) => v-1)
                     return
                 }    
             }
-            setGame('help', 0)
             setGame('direction', "down");
             setGame('commands', game.commands.slice(1))
             return
         } else if(command == "ARROWLEFT" && game.direction != "right") {
-            if(game.help == 0) {
+            if(game.strength > 0) {
                 let space = game.grid[game.snake.head.y][game.snake.head.x-1];
                 if(space == "W" || space == "O" || space == "S") {
-                    setGame('help', (v) => v+1)
+                    setGame('strength', (v) => v-1)
                     return
                 }    
             }
-            setGame('help', 0)
             setGame('direction', "left");
             setGame('commands', game.commands.slice(1))
             return
         } else if(command == "ARROWRIGHT" && game.direction != "left") {
-            if(game.help == 0) {
+            if(game.strength > 0) {
                 let space = game.grid[game.snake.head.y][game.snake.head.x+1];
                 if(space == "W" || space == "O" || space == "S") {
-                    setGame('help', (v) => v+1)
+                    setGame('strength', (v) => v-1)
                     return
                 }    
             }
-            setGame('help', 0)
             setGame('direction', "right");
             setGame('commands', game.commands.slice(1))
             return
