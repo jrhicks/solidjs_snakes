@@ -72,6 +72,7 @@ const BoardView = (props: { game: Game }) => {
                   classList={{
                     "flex-grow": true,
                     "p-0 m-0 overflow-hidden": true,
+                    "bg-cyan-600": cell() == "S" && [0].includes(props.game.strength),
                     "bg-cyan-500": cell() == "S" && [1,2].includes(props.game.strength),
                     "bg-cyan-400": cell() == "S" && [3].includes(props.game.strength),
                     "bg-cyan-300": cell() == "S" && [4,5].includes(props.game.strength),
