@@ -62,7 +62,7 @@ const WonLevelView = (props: { game: Game; getSpin: number | void }) => {
 
 const BoardView = (props: { game: Game }) => {
   return (
-    <div class="width-full h-full flex-grow flex flex-col">
+    <div class="w-full h-full flex-grow flex flex-col">
       <Index each={props.game.grid}>
         {(row, i) => (
           <div class="flex-grow flex flex-row">
@@ -70,12 +70,12 @@ const BoardView = (props: { game: Game }) => {
               {(cell, ii) => (
                 <div
                   classList={{
-                    "aspect-square": true,
+                    "flex-grow": true,
                     "p-0 m-0 overflow-hidden": true,
-                    "bg-green-400": cell() == "S",
+                    "bg-cyan-400": cell() == "S",
                     "bg-green-500": cell() == "W",
                     "bg-green-300": cell() == "O",
-                    "bg-cyan-600 rounded-full": cell() == "G",
+                    "outline outline-cyan-100 bg-cyan-400 rounded-full": cell() == "G",
                   }}
                 ></div>
               )}
