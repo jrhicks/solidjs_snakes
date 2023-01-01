@@ -26,7 +26,6 @@ export type Game = {
     obsticles: { x: number, y: number }[];
     goals: { x: number, y: number }[];
     restrictedKeys: ArrowKey[];
-    help: number;
     strength: number;
 }
 
@@ -53,7 +52,6 @@ export const newGame = (width: number, height: number): Game => {
         obsticles: [],
         goals: [],
         restrictedKeys: [],
-        help: 0,
         strength: 1
     }
 }
