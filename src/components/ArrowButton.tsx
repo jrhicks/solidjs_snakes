@@ -3,7 +3,7 @@ import {type Setter} from 'solid-js'
 const ArrowButton = (props: { label: string, value: string, getBtnKeys: ()=>string[], setBtnKeys: Setter<string[]> }) => {
 return (
     <button classList={{
-        "text-white font-bold m-1 py-5 px-4 rounded block w-full": true,
+        "text-white font-bold py-8 rounded block flex-grow": true,
         "bg-blue-200": props.getBtnKeys().includes(props.value),
         "bg-blue-500": !props.getBtnKeys().includes(props.value)
       }}
