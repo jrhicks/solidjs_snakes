@@ -1,25 +1,28 @@
 import { A } from "solid-start";
 import { createStore } from "solid-js/store";
 import { createSignal, createEffect } from "solid-js";
-import { newGame, runGameLoop, handleKeys }  from "../stores/game";
+import { newGame, runGameLoop, handleKeys } from "../stores/game";
 import { useKeyDownList } from "@solid-primitives/keyboard";
+import ArrowButton from "../components/ArrowButton";
 
 import GameView from "../components/GameView";
 
 export default function Home() {
   const [game, setGame] = createStore(newGame(30, 30))
   const [keys] = useKeyDownList();
-
+  const [getBtnKeys, setBtnKeys] = createSignal<string[]>([])
   runGameLoop(game, setGame)
+
   createEffect(() => {
-    handleKeys(keys, game, setGame)
+    const mergedKeys = () => [...keys(), ...getBtnKeys()].map((k)=>k.toString())
+    handleKeys(mergedKeys, game, setGame)
   })
 
   return (
     <main class="text-green-500 font-mono flex flex-col h-full">
-      
+
       <div class="h-2 sm:h-10" />
-      
+
       <div class="px-6">
         <div class="max-w-xl mx-auto flex flex-row">
           <div class="flex-grow">
@@ -33,7 +36,7 @@ export default function Home() {
           </div>
         </div>
       </div>
-      
+
       <div class="h-2 sm:h-10" />
 
       <div class="px-6 flex-grow">
@@ -41,8 +44,20 @@ export default function Home() {
           <GameView game={game} />
         </div>
       </div>
-      
-      <div class="h-2 sm:h-10" />
+
+      <div class="h-5" />
+
+      <div class="sm:hidden px-6">
+        <div class="mx-auto flex justify-center">
+          <ArrowButton value="ARROWUP" label="↑" getBtnKeys={getBtnKeys} setBtnKeys={setBtnKeys} />
+        </div>
+        <div class="mx-auto flex justify-center">
+          <ArrowButton value="ARROWLEFT" label="←" getBtnKeys={getBtnKeys} setBtnKeys={setBtnKeys} />
+          <ArrowButton value="ARROWDOWN" label="↓" getBtnKeys={getBtnKeys} setBtnKeys={setBtnKeys} />
+          <ArrowButton value="ARROWRIGHT" label="→" getBtnKeys={getBtnKeys} setBtnKeys={setBtnKeys} />
+        </div>
+
+      </div>
 
       <div class="hidden sm:block px-6">
         <div class="max-w-xl mx-auto flex">
@@ -50,8 +65,8 @@ export default function Home() {
           <p class="">Follow: <a class="underline" href="https://twitter.com/jrhicks">@jrhicks</a></p>
         </div>
       </div>
-      
-      <div class="h-2 sm:h-5" />
+
+      <div class="h-10" />
 
     </main>
   );
