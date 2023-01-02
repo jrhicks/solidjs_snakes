@@ -48,13 +48,15 @@ export default function Home() {
       <div class="h-5" />
 
       <div class="sm:hidden px-6">
-        <div class="mx-auto flex justify-center">
+        <div class="mx-auto px-24 flex">
           <ArrowButton value="ARROWUP" label="↑" getBtnKeys={getBtnKeys} setBtnKeys={setBtnKeys} />
         </div>
-        <div class="mx-auto flex justify-center">
+        <div class="mx-auto flex">
           <ArrowButton value="ARROWLEFT" label="←" getBtnKeys={getBtnKeys} setBtnKeys={setBtnKeys} />
-          <ArrowButton value="ARROWDOWN" label="↓" getBtnKeys={getBtnKeys} setBtnKeys={setBtnKeys} />
           <ArrowButton value="ARROWRIGHT" label="→" getBtnKeys={getBtnKeys} setBtnKeys={setBtnKeys} />
+        </div>
+        <div class="mx-auto px-24 flex">
+          <ArrowButton value="ARROWDOWN" label="↓" getBtnKeys={getBtnKeys} setBtnKeys={setBtnKeys} />
         </div>
 
       </div>
